@@ -1,5 +1,15 @@
 # Release Notes
 
+## Update 2026.02.07：发布 V1.2.7
+
+Bug Fixes:
+
+* Switch model download to use HuggingFaceDownloader instead of shelling out to huggingface-cli
+
+Bug Fixes:
+
+* 模型下载逻辑改为使用 HuggingFaceDownloader，避免调用 huggingface-cli
+
 ## Update 2025.06.27：发布 V1.2.6.1
 
 Major Changes:

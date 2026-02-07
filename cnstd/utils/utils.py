@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (C) 2021-2023, [Breezedeus](https://github.com/breezedeus).
+# Copyright (C) 2021-2026, [Breezedeus](https://github.com/breezedeus).
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -28,7 +28,7 @@ import zipfile
 from functools import cmp_to_key
 import shutil
 import tempfile
-import subprocess
+from ..hf_downloader import HuggingFaceDownloader
 
 from tqdm import tqdm
 import cv2
@@ -117,14 +117,11 @@ def prepare_model_files(model_fp, remote_repo, mirror_url='https://hf-mirror.com
     if model_dir.exists():
         shutil.rmtree(str(model_dir))
     model_dir.mkdir(parents=True)
-    download_cmd = f'huggingface-cli download --repo-type model --resume-download --local-dir-use-symlinks False {remote_repo} --local-dir {model_dir}'
-    subprocess.run(download_cmd, shell=True)
-    if not model_fp.exists():  # download failed above
-        if model_dir.exists():
-            shutil.rmtree(str(model_dir))
-        env = os.environ.copy()
-        env['HF_ENDPOINT'] = mirror_url
-        subprocess.run(download_cmd, env=env, shell=True)
+
+    downloader = HuggingFaceDownloader(mirror_urls=mirror_url, logger=logger)
+    ok = downloader.download(repo_id=remote_repo, local_dir=model_dir)
+    if not ok or not model_fp.exists():
+        logger.warning('Download failed or missing model file: %s', model_fp)
     return model_fp
 
 
