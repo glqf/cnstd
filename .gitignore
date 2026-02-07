@@ -24,6 +24,17 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+models/
+*.jpg
+*.jpeg
+*.png
+*.log
+*.pt
+*.ckpt
+*.onnx
+*.pyx
+*.json
+*.zip
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
