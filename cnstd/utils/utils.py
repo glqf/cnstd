@@ -40,9 +40,8 @@ from huggingface_hub import hf_hub_download
 from ..consts import MODEL_VERSION, MODEL_CONFIGS, HF_ENDPOINT_LIST
 
 fmt = '[%(levelname)s %(asctime)s %(funcName)s:%(lineno)d] %(' 'message)s '
-logging.basicConfig(format=fmt)
-logging.captureWarnings(True)
-logger = logging.getLogger()
+
+logger = logging.getLogger(__name__)
 
 
 def set_logger(log_file=None, log_level=logging.INFO, log_file_level=logging.NOTSET):
@@ -51,7 +50,11 @@ def set_logger(log_file=None, log_level=logging.INFO, log_file_level=logging.NOT
         >>> set_logger(log_file)
         >>> logger.info("abc'")
     """
+    global logger
     log_format = logging.Formatter(fmt)
+    logging.basicConfig(format=fmt)
+    logging.captureWarnings(True)
+    logger = logging.getLogger(__name__)
     logger.setLevel(log_level)
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(log_format)
