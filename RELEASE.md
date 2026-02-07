@@ -1,5 +1,15 @@
 # Release Notes
 
+## Update 2026.02.07：发布 V1.2.7.1
+
+Bug Fixes:
+
+* Align set_logger with the module logger so configured handlers/levels apply to downloads
+
+Bug Fixes:
+
+* 让 set_logger 使用模块级 logger，确保下载日志遵循配置的 handler 和 level
+
 ## Update 2026.02.07：发布 V1.2.7
 
 Bug Fixes:
